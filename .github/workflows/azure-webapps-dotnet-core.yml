@@ -38,9 +38,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v2
@@ -61,6 +58,10 @@ jobs:
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
